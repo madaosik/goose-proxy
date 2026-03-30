@@ -1,6 +1,9 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "cla-proxy-python"
-version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 dependencies = [
@@ -13,3 +16,14 @@ dependencies = [
 ]
 requires-python = ">=3.9,<4.0" # RHEL 9 and 10
 license-files = ["LICENSE"]
+dynamic = ["version"]
+
+[project.urls]
+"Source code" = "https://github.com/rhel-lightspeed/cla-proxy"
+"Bug Tracker" = "https://github.com/rhel-lightspeed/cla-proxy/issues"
+
+[project.scripts]
+cla-proxy = "cla_proxy.cli:serve"
+
+[tool.setuptools]
+packages = ["cla_proxy"]
