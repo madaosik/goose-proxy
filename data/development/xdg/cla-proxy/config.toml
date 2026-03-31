@@ -19,3 +19,6 @@ key_file = "data/development/auth/key.pem"
 [logging]
 # The default logging level for all messages logged by CLAD.
 level = "INFO"
+
+[server]
+reload = true

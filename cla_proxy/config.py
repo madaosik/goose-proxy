@@ -1,7 +1,7 @@
 """Schemas for the backend config."""
 
-import os
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import Annotated
@@ -98,6 +98,15 @@ class Backend(BaseModel):
     timeout: int = 30
 
 
+class Server(BaseModel):
+    """These are the settings that control how uvicon runs the application"""
+
+    host: str = "127.0.0.1"
+    port: int = 8080
+    reload: bool = False
+    workers: int = 1
+
+
 def get_xdg_config_path() -> Path:
     """Check for the existence of XDG_CONFIG_DIRS environment variable.
 
@@ -145,6 +154,7 @@ def get_xdg_config_path() -> Path:
 class Settings(BaseSettings):
     backend: Backend = Field(default_factory=Backend)
     logging: Logging = Field(default_factory=Logging)
+    server: Server = Field(default_factory=Server)
 
     model_config = SettingsConfigDict(
         toml_file=Path(get_xdg_config_path(), *CONFIG_FILE_DEFINITION)
