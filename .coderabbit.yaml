@@ -59,9 +59,7 @@ reviews:
   tools:
     ruff:
       enabled: true
-    # mypy is configured via pre-commit; CodeRabbit can flag type issues too
-    mypy:
-      enabled: true
+    # Note: mypy is configured via pre-commit (not available as CodeRabbit tool)
 
   auto_review:
     enabled: true
