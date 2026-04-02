@@ -8,6 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from cla_proxy.app import app
+from cla_proxy.config import Backend, Settings
 from cla_proxy.models.responses import (
     Response,
     ResponseCompletedEvent,
@@ -76,13 +77,17 @@ def _make_tool_call_response():
 @pytest.fixture
 def test_client():
     """FastAPI test client with mocked config."""
-    mock_settings = MagicMock()
+    mock_settings = MagicMock(spec=Settings)
+    mock_settings.backend = MagicMock(spec=Backend)
     mock_settings.backend.timeout = 30
 
+    original_client = getattr(app.state, "http_client", None)
     app.state.http_client = MagicMock()
 
     with patch("cla_proxy.middleware.get_settings", return_value=mock_settings):
         yield TestClient(app, raise_server_exceptions=False)
+
+    app.state.http_client = original_client
 
 
 @pytest.fixture

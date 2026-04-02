@@ -17,7 +17,7 @@ dependencies = [
     # Exists in EPEL9/EPEL10
     "fastapi[standard-no-fastapi-cloud-cli]>=0.121.2",
 ]
-requires-python = ">=3.14,<4.0"
+requires-python = ">=3.9,<4.0"  # RHEL 9 and 10
 license-files = ["LICENSE"]
 dynamic = ["version"]
 

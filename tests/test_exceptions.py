@@ -22,9 +22,7 @@ class TestHttpExceptionHandler:
         resp = _http_exception_handler(_dummy_request(), exc)
         assert resp.status_code == 400
         assert resp.body is not None
-        import json
-
-        body = json.loads(resp.body)
+        body = _parse(resp)
         assert body["error"]["type"] == "invalid_request_error"
         assert body["error"]["message"] == "Bad request body"
         assert body["error"]["code"] == 400
