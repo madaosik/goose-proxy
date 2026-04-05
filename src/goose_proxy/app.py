@@ -6,11 +6,10 @@ import httpx
 
 from fastapi import FastAPI
 
+from goose_proxy import v1
 from goose_proxy.config import get_settings
 from goose_proxy.exceptions import register_exception_handlers
 from goose_proxy.middleware import TimeoutMiddleware
-from goose_proxy.routers import health
-from goose_proxy.routers import v1
 
 
 logger = logging.getLogger(__name__)
@@ -53,5 +52,11 @@ app.add_middleware(TimeoutMiddleware)
 
 register_exception_handlers(app)
 
-app.include_router(health.router)
-app.include_router(v1.router, prefix="/v1")
+
+@app.get("/health")
+async def health_check() -> None:
+    """Health check endpoint for infrastructure probes."""
+    return None
+
+
+app.include_router(v1.router)
