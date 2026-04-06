@@ -2,19 +2,18 @@
 
 import json
 import time
+
 from collections.abc import AsyncIterator
 from typing import Any
 
-from goose_proxy.models.responses import (
-    ResponseCompletedEvent,
-    ResponseCreatedEvent,
-    ResponseFunctionCallArgumentsDeltaEvent,
-    ResponseFunctionToolCall,
-    ResponseOutputItemAddedEvent,
-    ResponseOutputMessage,
-    ResponseTextDeltaEvent,
-    StreamEvent,
-)
+from goose_proxy.models.responses import ResponseCompletedEvent
+from goose_proxy.models.responses import ResponseCreatedEvent
+from goose_proxy.models.responses import ResponseFunctionCallArgumentsDeltaEvent
+from goose_proxy.models.responses import ResponseFunctionToolCall
+from goose_proxy.models.responses import ResponseOutputItemAddedEvent
+from goose_proxy.models.responses import ResponseOutputMessage
+from goose_proxy.models.responses import ResponseTextDeltaEvent
+from goose_proxy.models.responses import StreamEvent
 
 
 def _make_chunk(
@@ -72,9 +71,7 @@ def _make_tool_call_arguments_delta(index: int, arguments: str) -> dict[str, Any
     }
 
 
-def _determine_finish_reason(
-    event: ResponseCompletedEvent, has_tool_calls: bool
-) -> str:
+def _determine_finish_reason(event: ResponseCompletedEvent, has_tool_calls: bool) -> str:
     """Determine finish_reason from a completed event."""
     reason = "stop"
     if has_tool_calls:
@@ -123,9 +120,7 @@ async def translate_stream(
                 model_name = event.response.model
 
             if not sent_role:
-                yield _make_chunk(
-                    request_id, model_name, created, {"role": "assistant"}
-                )
+                yield _make_chunk(request_id, model_name, created, {"role": "assistant"})
                 sent_role = True
 
         elif isinstance(event, ResponseTextDeltaEvent):
@@ -139,9 +134,7 @@ async def translate_stream(
                 yield _make_chunk(request_id, model_name, created, delta)
             elif isinstance(event.item, ResponseOutputMessage):
                 if not sent_role:
-                    yield _make_chunk(
-                        request_id, model_name, created, {"role": "assistant"}
-                    )
+                    yield _make_chunk(request_id, model_name, created, {"role": "assistant"})
                     sent_role = True
 
         elif isinstance(event, ResponseFunctionCallArgumentsDeltaEvent):

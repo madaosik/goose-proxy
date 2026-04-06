@@ -1,14 +1,17 @@
 import logging
+
 from contextlib import asynccontextmanager
-import uvicorn
 
 import httpx
+import uvicorn
+
 from fastapi import FastAPI
 
 from goose_proxy.config import get_settings
 from goose_proxy.exceptions import register_exception_handlers
 from goose_proxy.middleware import TimeoutMiddleware
 from goose_proxy.routers import v1
+
 
 logger = logging.getLogger(__name__)
 

@@ -1,15 +1,17 @@
 import logging
 
 import httpx
-from fastapi import FastAPI, HTTPException, Request
+
+from fastapi import FastAPI
+from fastapi import HTTPException
+from fastapi import Request
 from fastapi.responses import JSONResponse
+
 
 logger = logging.getLogger(__name__)
 
 
-def _openai_error_response(
-    status_code: int, message: str, error_type: str
-) -> JSONResponse:
+def _openai_error_response(status_code: int, message: str, error_type: str) -> JSONResponse:
     """Build an OpenAI-compatible error response."""
     return JSONResponse(
         status_code=status_code,

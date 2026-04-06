@@ -2,16 +2,18 @@
 
 import logging
 import os
+
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, Field, field_validator
-from pydantic_settings import (
-    BaseSettings,
-    PydanticBaseSettingsSource,
-    SettingsConfigDict,
-    TomlConfigSettingsSource,
-)
+from pydantic import BaseModel
+from pydantic import Field
+from pydantic import field_validator
+from pydantic_settings import BaseSettings
+from pydantic_settings import PydanticBaseSettingsSource
+from pydantic_settings import SettingsConfigDict
+from pydantic_settings import TomlConfigSettingsSource
+
 
 #: Define the config file path.
 CONFIG_FILE_DEFINITION: tuple[str, str] = (
@@ -42,9 +44,7 @@ def get_xdg_config_path() -> Path:
     Ref: https://specifications.freedesktop.org/basedir-spec/latest/
     """
     xdg_config_dirs_env: str = os.getenv("XDG_CONFIG_DIRS", "")
-    xdg_config_dirs: list[str] = (
-        xdg_config_dirs_env.split(os.pathsep) if xdg_config_dirs_env else []
-    )
+    xdg_config_dirs: list[str] = xdg_config_dirs_env.split(os.pathsep) if xdg_config_dirs_env else []
     wanted_xdg_path = Path("/etc/xdg")
 
     # In case XDG_CONFIG_DIRS is not set yet, we return the path we want.
@@ -60,9 +60,7 @@ def get_xdg_config_path() -> Path:
 
     # Try to find the first occurrence of a directory in the path that exists
     # and return it. If no path exists, return the default value.
-    xdg_dir_found = next(
-        (dir for dir in xdg_config_dirs if os.path.exists(dir)), wanted_xdg_path
-    )
+    xdg_dir_found = next((dir for dir in xdg_config_dirs if os.path.exists(dir)), wanted_xdg_path)
     return Path(xdg_dir_found)
 
 
@@ -86,9 +84,7 @@ class Logging(BaseModel):
         level = v.upper()
         allowed_levels = ("CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET")
         if level not in allowed_levels:
-            raise ValueError(
-                f"The requested level '{level}' is not allowed. Choose from: {', '.join(allowed_levels)}"
-            )
+            raise ValueError(f"The requested level '{level}' is not allowed. Choose from: {', '.join(allowed_levels)}")
 
         return level
 
@@ -135,9 +131,7 @@ class Settings(BaseSettings):
     logging: Logging = Field(default_factory=Logging)
     server: Server = Field(default_factory=Server)
 
-    model_config = SettingsConfigDict(
-        toml_file=Path(get_xdg_config_path(), *CONFIG_FILE_DEFINITION)
-    )
+    model_config = SettingsConfigDict(toml_file=Path(get_xdg_config_path(), *CONFIG_FILE_DEFINITION))
 
     @classmethod
     def settings_customise_sources(

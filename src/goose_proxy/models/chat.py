@@ -1,6 +1,11 @@
-from typing import Annotated, Any, Literal, Optional, Union
+from typing import Annotated
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class TextContentPart(BaseModel):
@@ -96,25 +101,13 @@ class ChatCompletionRequest(BaseModel):
     """OpenAI-compatible chat completion request."""
 
     model: str = Field(..., description="Model to use for completion")
-    messages: list[ChatMessage] = Field(
-        ..., description="List of messages in the conversation"
-    )
+    messages: list[ChatMessage] = Field(..., description="List of messages in the conversation")
     stream: bool = Field(default=False, description="Whether to stream responses")
-    tools: Optional[list[Tool]] = Field(
-        default=None, description="List of tools the model can call"
-    )
-    tool_choice: Optional[Union[str, dict[str, Any]]] = Field(
-        default=None, description="Controls which tool is called"
-    )
-    temperature: Optional[float] = Field(
-        default=None, description="Sampling temperature"
-    )
-    max_tokens: Optional[int] = Field(
-        default=None, description="Maximum number of tokens to generate"
-    )
-    stream_options: Optional[dict[str, Any]] = Field(
-        default=None, description="Options for streaming responses"
-    )
+    tools: Optional[list[Tool]] = Field(default=None, description="List of tools the model can call")
+    tool_choice: Optional[Union[str, dict[str, Any]]] = Field(default=None, description="Controls which tool is called")
+    temperature: Optional[float] = Field(default=None, description="Sampling temperature")
+    max_tokens: Optional[int] = Field(default=None, description="Maximum number of tokens to generate")
+    stream_options: Optional[dict[str, Any]] = Field(default=None, description="Options for streaming responses")
 
 
 # --- Chat Completion response models ---

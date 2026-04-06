@@ -4,23 +4,19 @@ import json
 
 import pytest
 
-from goose_proxy.models.responses import (
-    Response,
-    ResponseCompletedEvent,
-    ResponseCreatedEvent,
-    ResponseFunctionCallArgumentsDeltaEvent,
-    ResponseFunctionToolCall,
-    ResponseOutputItemAddedEvent,
-    ResponseOutputMessage,
-    ResponseTextDeltaEvent,
-    ResponseUsage,
-)
+from goose_proxy.models.responses import Response
+from goose_proxy.models.responses import ResponseCompletedEvent
+from goose_proxy.models.responses import ResponseCreatedEvent
+from goose_proxy.models.responses import ResponseFunctionCallArgumentsDeltaEvent
+from goose_proxy.models.responses import ResponseFunctionToolCall
+from goose_proxy.models.responses import ResponseOutputItemAddedEvent
+from goose_proxy.models.responses import ResponseOutputMessage
+from goose_proxy.models.responses import ResponseTextDeltaEvent
+from goose_proxy.models.responses import ResponseUsage
 from goose_proxy.translators.streaming import translate_stream
 
 
-def _make_base_response(
-    response_id="resp_1", status="in_progress", output=None, usage=None
-):
+def _make_base_response(response_id="resp_1", status="in_progress", output=None, usage=None):
     return Response(
         id=response_id,
         created_at=1700000000,

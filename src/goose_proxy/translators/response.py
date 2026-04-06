@@ -1,20 +1,16 @@
 """Translate Responses API responses to Chat Completions format."""
 
-from goose_proxy.models.chat import (
-    ChatCompletion,
-    ChatCompletionMessageToolCall,
-    ChatCompletionResponseMessage,
-    Choice,
-    CompletionUsage,
-    Function,
-)
-from goose_proxy.models.responses import (
-    OutputItem,
-    Response,
-    ResponseFunctionToolCall,
-    ResponseOutputMessage,
-    ResponseOutputText,
-)
+from goose_proxy.models.chat import ChatCompletion
+from goose_proxy.models.chat import ChatCompletionMessageToolCall
+from goose_proxy.models.chat import ChatCompletionResponseMessage
+from goose_proxy.models.chat import Choice
+from goose_proxy.models.chat import CompletionUsage
+from goose_proxy.models.chat import Function
+from goose_proxy.models.responses import OutputItem
+from goose_proxy.models.responses import Response
+from goose_proxy.models.responses import ResponseFunctionToolCall
+from goose_proxy.models.responses import ResponseOutputMessage
+from goose_proxy.models.responses import ResponseOutputText
 
 
 def _extract_text(output_message: ResponseOutputMessage) -> str | None:

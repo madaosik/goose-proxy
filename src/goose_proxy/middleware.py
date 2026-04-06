@@ -1,7 +1,10 @@
 import asyncio
 
-from starlette.types import ASGIApp, Receive, Scope, Send
 from fastapi.responses import JSONResponse
+from starlette.types import ASGIApp
+from starlette.types import Receive
+from starlette.types import Scope
+from starlette.types import Send
 
 from goose_proxy.config import get_settings
 

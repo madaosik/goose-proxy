@@ -1,24 +1,27 @@
 """Tests for the v1 router endpoints."""
 
 import json
-from unittest.mock import AsyncMock, MagicMock, patch
+
+from unittest.mock import AsyncMock
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 import httpx
 import pytest
+
 from fastapi.testclient import TestClient
 
 from goose_proxy.app import app
-from goose_proxy.config import Backend, Settings
-from goose_proxy.models.responses import (
-    Response,
-    ResponseCompletedEvent,
-    ResponseCreatedEvent,
-    ResponseFunctionToolCall,
-    ResponseOutputMessage,
-    ResponseOutputText,
-    ResponseTextDeltaEvent,
-    ResponseUsage,
-)
+from goose_proxy.config import Backend
+from goose_proxy.config import Settings
+from goose_proxy.models.responses import Response
+from goose_proxy.models.responses import ResponseCompletedEvent
+from goose_proxy.models.responses import ResponseCreatedEvent
+from goose_proxy.models.responses import ResponseFunctionToolCall
+from goose_proxy.models.responses import ResponseOutputMessage
+from goose_proxy.models.responses import ResponseOutputText
+from goose_proxy.models.responses import ResponseTextDeltaEvent
+from goose_proxy.models.responses import ResponseUsage
 
 
 def _make_usage():
@@ -38,11 +41,7 @@ def _make_text_response():
         output=[
             ResponseOutputMessage(
                 id="msg_1",
-                content=[
-                    ResponseOutputText(
-                        annotations=[], text="Hello!", type="output_text"
-                    )
-                ],
+                content=[ResponseOutputText(annotations=[], text="Hello!", type="output_text")],
                 role="assistant",
                 status="completed",
                 type="message",
@@ -181,9 +180,7 @@ class TestChatCompletions:
         )
 
         events = [
-            ResponseCreatedEvent(
-                response=base_resp, sequence_number=0, type="response.created"
-            ),
+            ResponseCreatedEvent(response=base_resp, sequence_number=0, type="response.created"),
             ResponseTextDeltaEvent(
                 content_index=0,
                 delta="Hi",
