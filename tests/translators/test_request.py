@@ -2,14 +2,12 @@
 
 import pytest
 
-from goose_proxy.models.chat import (
-    ChatCompletionMessageToolCall,
-    ChatCompletionRequest,
-    ChatMessage,
-    Function,
-    Tool,
-    ToolFunction,
-)
+from goose_proxy.models.chat import ChatCompletionMessageToolCall
+from goose_proxy.models.chat import ChatCompletionRequest
+from goose_proxy.models.chat import ChatMessage
+from goose_proxy.models.chat import Function
+from goose_proxy.models.chat import Tool
+from goose_proxy.models.chat import ToolFunction
 from goose_proxy.translators.request import translate_request
 
 
@@ -189,9 +187,7 @@ class TestUserMessages:
             ],
         )
         result = translate_request(req)
-        assert result["input"][0]["content"] == [
-            {"type": "input_text", "text": "What is this?"}
-        ]
+        assert result["input"][0]["content"] == [{"type": "input_text", "text": "What is this?"}]
 
     def test_user_message_array_content_with_image(self):
         req = ChatCompletionRequest(

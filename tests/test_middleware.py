@@ -1,12 +1,15 @@
 """Tests for the timeout middleware."""
 
 import asyncio
-from unittest.mock import MagicMock, patch
 
-from starlette.testclient import TestClient
+from unittest.mock import MagicMock
+from unittest.mock import patch
+
 from starlette.applications import Starlette
-from starlette.responses import PlainTextResponse, StreamingResponse
+from starlette.responses import PlainTextResponse
+from starlette.responses import StreamingResponse
 from starlette.routing import Route
+from starlette.testclient import TestClient
 
 from goose_proxy.middleware import TimeoutMiddleware
 

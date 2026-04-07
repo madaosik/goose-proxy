@@ -31,13 +31,88 @@ goose-proxy = "goose_proxy.app:serve"
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
-
 [dependency-groups]
 dev = [
+    "ipdb",
+    "ipython",
+    {include-group = "lint"},
+    {include-group = "test"},
+]
+
+lint = [
     "ruff>=0.15.8",
-    "pytest>=8.0",
-    "pytest-asyncio>=0.25",
     "ty>=0.0.27",
 ]
+
+test = [
+    "pytest-asyncio>=0.25",
+    "pytest-cov>=7.0.0",
+    "pytest-mock",
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "-r", "a",
+    "--verbose",
+    "--strict-markers",
+    "--cov", "src",
+    "--cov", "tests",
+    "--cov-report", "html",
+    "--cov-report", "term-missing:skip-covered",
+    "--durations-min", "1",
+    "--durations", "10",
+    "--color", "yes",
+    "--showlocals",
+    "--pdbcls", "IPython.terminal.debugger:TerminalPdb",
+]
+asyncio_mode = "auto"
+pythonpath = "src"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+data_file = "coverage/.data"
+source = [
+    "src",
+    "tests",
+]
+omit = [
+    ".venv/*"  # VS Code is including these files in reports for an unknown reason
+]
+
+[tool.coverage.html]
+directory = "coverage/htmlcov"
+
+[tool.coverage.json]
+output = "coverage/coverage.json"
+
+[tool.coverage.xml]
+output = "coverage/coverage.xml"
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+# https://docs.astral.sh/ruff/rules/
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "I",  # import order (like isort)
+    "C90",  # cyclomatic complexity
+    "RUF100",  # unused-noqa
+    "T20",  # flake8-print
+]
+mccabe.max-complexity = 12
+
+ignore = [
+    "E501",  # Ignore line length
+]
+
+[tool.ruff.lint.isort]
+case-sensitive = false
+force-single-line = true
+lines-after-imports = 2
+lines-between-types = 1
+order-by-type = false

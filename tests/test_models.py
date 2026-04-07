@@ -1,9 +1,7 @@
 """Tests for Pydantic model validation and helpers."""
 
-from goose_proxy.models.responses import (
-    Response,
-    parse_stream_event,
-)
+from goose_proxy.models.responses import parse_stream_event
+from goose_proxy.models.responses import Response
 
 
 class TestResponseDropUnknownOutputTypes:

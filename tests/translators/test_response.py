@@ -2,13 +2,11 @@
 
 import pytest
 
-from goose_proxy.models.responses import (
-    Response,
-    ResponseFunctionToolCall,
-    ResponseOutputMessage,
-    ResponseOutputText,
-    ResponseUsage,
-)
+from goose_proxy.models.responses import Response
+from goose_proxy.models.responses import ResponseFunctionToolCall
+from goose_proxy.models.responses import ResponseOutputMessage
+from goose_proxy.models.responses import ResponseOutputText
+from goose_proxy.models.responses import ResponseUsage
 from goose_proxy.translators.response import translate_response
 
 

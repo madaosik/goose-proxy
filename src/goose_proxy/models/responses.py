@@ -3,9 +3,17 @@
 from __future__ import annotations
 
 import logging
-from typing import Annotated, Literal, Union, cast
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing import Annotated
+from typing import cast
+from typing import Literal
+from typing import Union
+
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import Field
+from pydantic import field_validator
+
 
 logger = logging.getLogger(__name__)
 
@@ -80,11 +88,7 @@ class Response(BaseModel):
         """
         known = []
         for item in items:
-            item_type = (
-                item.get("type", "")
-                if isinstance(item, dict)
-                else getattr(item, "type", "")
-            )
+            item_type = item.get("type", "") if isinstance(item, dict) else getattr(item, "type", "")
             if item_type in _KNOWN_OUTPUT_TYPES:
                 known.append(item)
             else:
@@ -120,9 +124,7 @@ class ResponseOutputItemAddedEvent(BaseModel):
 
 
 class ResponseFunctionCallArgumentsDeltaEvent(BaseModel):
-    type: Literal["response.function_call_arguments.delta"] = (
-        "response.function_call_arguments.delta"
-    )
+    type: Literal["response.function_call_arguments.delta"] = "response.function_call_arguments.delta"
     delta: str
     item_id: str
     output_index: int

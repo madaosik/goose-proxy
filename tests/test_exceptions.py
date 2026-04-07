@@ -3,13 +3,12 @@
 from unittest.mock import MagicMock
 
 import httpx
+
 from fastapi import HTTPException
 
-from goose_proxy.exceptions import (
-    _http_exception_handler,
-    _http_status_error_handler,
-    _httpx_error_handler,
-)
+from goose_proxy.exceptions import _http_exception_handler
+from goose_proxy.exceptions import _http_status_error_handler
+from goose_proxy.exceptions import _httpx_error_handler
 
 
 def _dummy_request():

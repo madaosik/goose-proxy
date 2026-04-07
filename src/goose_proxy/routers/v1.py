@@ -1,18 +1,24 @@
 import json
 import logging
+
 from collections.abc import AsyncIterator
 
 import httpx
-from fastapi import APIRouter, Request
+
+from fastapi import APIRouter
+from fastapi import Request
 from fastapi.responses import StreamingResponse
 
-from goose_proxy.models.chat import ChatCompletionRequest, ModelInfo, ModelsResponse
-from goose_proxy.models.responses import Response, StreamEvent, parse_stream_event
-from goose_proxy.translators import (
-    translate_request,
-    translate_response,
-    translate_stream,
-)
+from goose_proxy.models.chat import ChatCompletionRequest
+from goose_proxy.models.chat import ModelInfo
+from goose_proxy.models.chat import ModelsResponse
+from goose_proxy.models.responses import parse_stream_event
+from goose_proxy.models.responses import Response
+from goose_proxy.models.responses import StreamEvent
+from goose_proxy.translators import translate_request
+from goose_proxy.translators import translate_response
+from goose_proxy.translators import translate_stream
+
 
 logger = logging.getLogger(__name__)
 
@@ -26,9 +32,7 @@ async def create_response(client: httpx.AsyncClient, **params) -> Response:
     return Response.model_validate(resp.json())
 
 
-async def stream_response(
-    client: httpx.AsyncClient, **params
-) -> AsyncIterator[StreamEvent]:
+async def stream_response(client: httpx.AsyncClient, **params) -> AsyncIterator[StreamEvent]:
     """Stream a response and yield parsed event models."""
     async with client.stream(
         "POST",

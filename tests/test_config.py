@@ -1,12 +1,17 @@
 """Tests for configuration loading and validation."""
 
 import os
+
 from pathlib import Path
 from unittest.mock import patch
 
 import pytest
 
-from goose_proxy.config import Logging, Auth, Backend, Server, get_xdg_config_path
+from goose_proxy.config import Auth
+from goose_proxy.config import Backend
+from goose_proxy.config import get_xdg_config_path
+from goose_proxy.config import Logging
+from goose_proxy.config import Server
 
 
 class TestLogging:
@@ -19,9 +24,7 @@ class TestLogging:
         log = Logging(level=level)
         assert log.level == "DEBUG"
 
-    @pytest.mark.parametrize(
-        "level", ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"]
-    )
+    @pytest.mark.parametrize("level", ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"])
     def test_all_valid_levels(self, level):
         log = Logging(level=level)
         assert log.level == level
@@ -52,9 +55,7 @@ class TestBackend:
         assert isinstance(b.auth, Auth)
 
     def test_custom_values(self):
-        b = Backend(
-            endpoint="https://example.com", proxy="http://proxy:8080", timeout=60
-        )
+        b = Backend(endpoint="https://example.com", proxy="http://proxy:8080", timeout=60)
         assert b.endpoint == "https://example.com"
         assert b.proxy == "http://proxy:8080"
         assert b.timeout == 60

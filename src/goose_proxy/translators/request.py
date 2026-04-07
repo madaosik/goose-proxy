@@ -2,13 +2,11 @@
 
 from typing import Any
 
-from goose_proxy.models.chat import (
-    ChatCompletionRequest,
-    ChatMessage,
-    ContentPart,
-    ImageUrlContentPart,
-    TextContentPart,
-)
+from goose_proxy.models.chat import ChatCompletionRequest
+from goose_proxy.models.chat import ChatMessage
+from goose_proxy.models.chat import ContentPart
+from goose_proxy.models.chat import ImageUrlContentPart
+from goose_proxy.models.chat import TextContentPart
 
 
 def _translate_tool_choice(
@@ -23,11 +21,7 @@ def _translate_tool_choice(
     if isinstance(tool_choice, str):
         return tool_choice
 
-    if (
-        isinstance(tool_choice, dict)
-        and tool_choice.get("type") == "function"
-        and "function" in tool_choice
-    ):
+    if isinstance(tool_choice, dict) and tool_choice.get("type") == "function" and "function" in tool_choice:
         return {
             "type": "function",
             "name": tool_choice["function"]["name"],
@@ -78,7 +72,7 @@ def _translate_user_content(
     return parts or [{"type": "input_text", "text": ""}]
 
 
-def _translate_messages(
+def _translate_messages(  # noqa: C901
     messages: list[ChatMessage],
 ) -> tuple[str | None, list[dict[str, Any]]]:
     """Convert Chat Completions messages to Responses API input items.
